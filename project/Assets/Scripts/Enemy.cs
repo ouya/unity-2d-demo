@@ -25,6 +25,9 @@ public class Enemy : MonoBehaviour
 		ren = transform.Find("body").GetComponent<SpriteRenderer>();
 		frontCheck = transform.Find("frontCheck").transform;
 		score = GameObject.Find("Score").GetComponent<Score>();
+
+		if(Random.value > 0.5f)
+			Flip();
 	}
 
 	void FixedUpdate ()

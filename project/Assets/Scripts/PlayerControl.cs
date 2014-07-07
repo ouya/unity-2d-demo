@@ -56,6 +56,8 @@ public class PlayerControl : MonoBehaviour
 		float ls = OuyaSDK.OuyaInput.GetAxis(0, OuyaController.AXIS_LS_X);
 		float dpad = OuyaSDK.OuyaInput.GetButton(0, OuyaController.BUTTON_DPAD_LEFT) ? -1 : OuyaSDK.OuyaInput.GetButton(0, OuyaController.BUTTON_DPAD_RIGHT) ? 1 : 0;
 		float h = Mathf.Clamp(ls + dpad, -1, 1);
+		if(Mathf.Abs(h) < 0.1)
+			h = 0;
 #else
 		float h = Input.GetAxis("Horizontal");
 #endif
