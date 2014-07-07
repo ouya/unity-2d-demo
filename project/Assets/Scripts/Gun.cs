@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+#if UNITY_ANDROID && !UNITY_EDITOR
+using tv.ouya.console.api;
+#endif
 
 public class Gun : MonoBehaviour
 {
@@ -22,7 +25,12 @@ public class Gun : MonoBehaviour
 	void Update ()
 	{
 		// If the fire button is pressed...
+		
+#if UNITY_ANDROID && !UNITY_EDITOR
+		if(OuyaSDK.OuyaInput.GetButtonDown(0, OuyaController.BUTTON_R1))
+#else
 		if(Input.GetButtonDown("Fire1"))
+#endif
 		{
 			// ... set the animator Shoot trigger parameter and play the audioclip.
 			anim.SetTrigger("Shoot");

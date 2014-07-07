@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+#if UNITY_ANDROID && !UNITY_EDITOR
+using tv.ouya.console.api;
+#endif
 
 public class LayBombs : MonoBehaviour
 {
@@ -23,7 +26,11 @@ public class LayBombs : MonoBehaviour
 	void Update ()
 	{
 		// If the bomb laying button is pressed, the bomb hasn't been laid and there's a bomb to lay...
+#if UNITY_ANDROID && !UNITY_EDITOR
+		if(OuyaSDK.OuyaInput.GetButtonDown(0, OuyaController.BUTTON_L1) && !bombLaid && bombCount > 0)
+#else
 		if(Input.GetButtonDown("Fire2") && !bombLaid && bombCount > 0)
+#endif
 		{
 			// Decrement the number of bombs.
 			bombCount--;

@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+#if UNITY_ANDROID && !UNITY_EDITOR
+using tv.ouya.console.api;
+#endif
 
 public class PlayerControl : MonoBehaviour
 {
@@ -23,6 +26,24 @@ public class PlayerControl : MonoBehaviour
 	private bool grounded = false;			// Whether or not the player is grounded.
 	private Animator anim;					// Reference to the player's animator component.
 
+	
+
+	void Start()
+	{
+		#if UNITY_ANDROID && !UNITY_EDITOR
+		WaitForOuyaSdk();
+		#endif
+	}
+	
+	#if UNITY_ANDROID && !UNITY_EDITOR
+	IEnumerable WaitForOuyaSdk()
+	{
+		while (!OuyaSDK.isIAPInitComplete())
+		{
+			yield return null;
+		}
+	}
+	#endif
 
 	void Awake()
 	{
@@ -38,7 +59,11 @@ public class PlayerControl : MonoBehaviour
 		grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));  
 
 		// If the jump button is pressed and the player is grounded then the player should jump.
+#if UNITY_ANDROID && !UNITY_EDITOR
+		if(OuyaSDK.OuyaInput.GetButtonDown(0, OuyaController.BUTTON_O) && grounded)
+#else
 		if(Input.GetButtonDown("Jump") && grounded)
+#endif
 			jump = true;
 	}
 
@@ -46,7 +71,14 @@ public class PlayerControl : MonoBehaviour
 	void FixedUpdate ()
 	{
 		// Cache the horizontal input.
+#if UNITY_ANDROID && !UNITY_EDITOR
+		float ls = OuyaSDK.OuyaInput.GetAxis(0, OuyaController.AXIS_LS_X);
+		float dpad = OuyaSDK.OuyaInput.GetButton(0, OuyaController.BUTTON_DPAD_LEFT) ? -1 : OuyaSDK.OuyaInput.GetButton(0, OuyaController.BUTTON_DPAD_RIGHT) ? 1 : 0;
+		float h = Mathf.Clamp(ls + dpad, -1, 1);
+#else
 		float h = Input.GetAxis("Horizontal");
+#endif
+
 
 		// The Speed animator parameter is set to the absolute value of the horizontal input.
 		anim.SetFloat("Speed", Mathf.Abs(h));

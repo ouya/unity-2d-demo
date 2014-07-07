@@ -10,7 +10,7 @@ PlayerSettings:
   targetGlesGraphics: 1
   targetResolution: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
+  companyName: OUYA
   productName: Unity Demo 2D
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
