@@ -26,25 +26,6 @@ public class PlayerControl : MonoBehaviour
 	private bool grounded = false;			// Whether or not the player is grounded.
 	private Animator anim;					// Reference to the player's animator component.
 
-	
-
-	void Start()
-	{
-		#if UNITY_ANDROID && !UNITY_EDITOR
-		WaitForOuyaSdk();
-		#endif
-	}
-	
-	#if UNITY_ANDROID && !UNITY_EDITOR
-	IEnumerable WaitForOuyaSdk()
-	{
-		while (!OuyaSDK.isIAPInitComplete())
-		{
-			yield return null;
-		}
-	}
-	#endif
-
 	void Awake()
 	{
 		// Setting up references.
