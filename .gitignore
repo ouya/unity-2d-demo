@@ -13,3 +13,5 @@ ExportedObj/
 *.unityproj
 *.booproj
 *.apk
+*.unitypackage
+*.log
