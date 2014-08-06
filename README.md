@@ -3,7 +3,7 @@ OUYA Unity 2D Demo
 
 This is the demo Unity project for the video found here: http://vimeo.com/102651617
 
-Follow along and submit a complete game for the OUYA in 20 minutes!
+Follow along and submit a complete game for the OUYA in 20 minutes! [Text version here](https://devs.ouya.tv/developers/docs/make_a_game_in_20_minutes)
 
 **Building**
 
